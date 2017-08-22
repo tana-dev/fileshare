@@ -12,9 +12,14 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+
+	// コピー先
+	cpath := "/tmp/copy/"
+	// cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\`
+
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
 	fpath := strings.TrimRight(r.URL.Path, "/")
-	fpath = strings.TrimLeft(fpath, "/")
+	// fpath = strings.TrimLeft(fpath, "/")
 	fname := filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -26,42 +31,41 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if finfo.IsDir() {
 		// ディレクトリ配下のファイル一覧を取得
-		fmt.Fprintf(w, fpath)
+		fmt.Fprintln(w, dirwalk(fpath))
+		return
 	} else {
 		// ファイルをコピー
-		// cpath := "/tmp/copy/" + fname
-		cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\` + fname
-
-		src, err := os.Open(fpath)
-		if err != nil {
-			panic(err)
-		}
-		defer src.Close()
-
-		dst, err := os.Create(cpath)
-		if err != nil {
-			panic(err)
-		}
-		defer dst.Close()
-
-		_, err = io.Copy(dst, src)
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Fprintln(w, cpath)
-		fmt.Fprintln(w, fpath)
+		cpath = cpath + fname
+		copyfile(fpath, cpath)
 	}
 
-	// ak, _ := url.QueryUnescape(path)
-	// ak := Query()path.Encode()
-	// fmt.Fprintf(w, "Hello!%s", path)
-	// fmt.Fprintf(w, ak)
+	fmt.Fprintln(w, fpath)
+	fmt.Fprintln(w, cpath)
 }
 
 func main() {
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
+}
+
+func copyfile(srcpath string, dstpath string) {
+
+	src, err := os.Open(srcpath)
+	if err != nil {
+		panic(err)
+	}
+	defer src.Close()
+
+	dst, err := os.Create(dstpath)
+	if err != nil {
+		panic(err)
+	}
+	defer dst.Close()
+
+	_, err = io.Copy(dst, src)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func dirwalk(dir string) []string {
@@ -72,10 +76,6 @@ func dirwalk(dir string) []string {
 
 	var paths []string
 	for _, file := range files {
-		if file.IsDir() {
-			paths = append(paths, dirwalk(filepath.Join(dir, file.Name()))...)
-			continue
-		}
 		paths = append(paths, filepath.Join(dir, file.Name()))
 	}
 
