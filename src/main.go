@@ -14,12 +14,12 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	// コピー先
-	cpath := "/tmp/copy/"
-	// cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\`
+	// cpath := "/tmp/copy/"
+	cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
 	fpath := strings.TrimRight(r.URL.Path, "/")
-	// fpath = strings.TrimLeft(fpath, "/")
+	fpath = strings.TrimLeft(fpath, "/")
 	fname := filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -36,11 +36,30 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// ファイルをコピー
 		cpath = cpath + fname
-		copyfile(fpath, cpath)
+		// copyfile(fpath, cpath)
+
+src, err := os.Open(fpath)
+if err != nil {
+	panic(err)
+}
+defer src.Close()
+
+out, _ := ioutil.ReadAll(src)
+
+// いろんな文字列情報
+// ファイル名
+w.Header().Set("Content-Disposition", "attachment; filename=test.xlsx")
+// コンテントタイプ
+w.Header().Set("Content-Type", "application/vnd.ms-excel")
+// ファイルの長さ
+// w.Header().Set("Content-Length", string(len(out)))
+// bodyに書き込み
+w.Write(out)
+
 	}
 
-	fmt.Fprintln(w, fpath)
-	fmt.Fprintln(w, cpath)
+	// fmt.Fprintln(w, fpath)
+	// fmt.Fprintln(w, cpath)
 }
 
 func main() {
