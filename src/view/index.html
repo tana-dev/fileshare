@@ -2,61 +2,52 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>FOLFER</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <link href="../resources/css/bootstrap.min.css" rel="stylesheet"> -->
+    <title>Downloder</title>
+    <link rel="shortcut icon" href="./c_d.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">Navbar</a>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-
+<nav class="navbar navbar-light" style="background-color: #663399;">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample2">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">
+				<img alt="Brand" src="./c_d.svg" style="height: 20px;">DL
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="navbarEexample2">
+			<ul class="nav navbar-nav">
+				<li><a href="#">メニューＡ</a></li>
+				<li><a href="#">メニューＢ</a></li>
+				<li><a href="#">メニューＣ</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
     <!--　▼ ジャンボトロン　 -->
     <div class="jumbotron">
       <div class="container">
         <h2>Downloder</h2>
-        サブテキストサブテキストサブテキストサブテキストサブテキストサブテキスト
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a>
-        <p>名前:{{.Name}}</p>
-        <p>出身:{{.From}}</p>
-        <div>{{.Links}}</div>
+        <p>名前:{{$.Name}}</p>
+        <p>出身:{{$.From}}</p>
+{{.Links}}
+        {{range $val := .Links}}
+            {{$val}}
+        {{end}}
+{{.Links}}
+            {{$.Url}}
       </div>
     </div>
     <!--　▲ ジャンボトロン　 -->
     <!-- js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <script src="../resources/js/bootstrap.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- js -->
 </body>
 </html>

@@ -12,25 +12,31 @@ import (
 	"strings"
 )
 
+
+
 type Person struct {
-	Name string
-	From string
-	Links string
+	Name  string
+	From  string
+	Links []string
+	Url   string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
-	// コピー先
-	// cpath := `/tmp/copy/`
-    url := "http://10.27.145.100:8080/"
-	cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
-    var link string
+	var url string
+	var links []string
+	var fpath string
+	var fname string
+
+	url = "http://10.27.145.100:8080/"
+	// cpath = `/tmp/copy/`
+	// cpath = `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-    fpath := `\` + strings.Replace(r.URL.Path, "/", `\`, -1)
-	// fpath = strings.TrimRight(r.URL.Path, "/")
 	// fpath = strings.TrimLeft(fpath, "/")
-	fname := filepath.Base(fpath)
+	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1)
+	fpath = strings.TrimRight(r.URL.Path, "/")
+	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
 	finfo, err := os.Stat(fpath)
@@ -40,25 +46,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if finfo.IsDir() {
-        // type Links struct {
-        //     Name string
-        //     From string
-        // }
+		// type Links struct {
+		//     Name string
+		//     From string
+		// }
 		// ディレクトリ配下のファイル一覧を取得
 		fpaths := dirwalk(fpath)
 		// dirwalk(fpath)
+        m = make(map[string]st)
 		for _, fp := range fpaths {
 			// fmt.Fprintln(w, "<a href=\"" + url + fp + "\">" + fp + "</a>" + "<br>")
-			link = link + "<a href=\"" + url + fp + "\">" + fp + "</a>" + "<br>"
-            // l := Links{
-                // link: "<a href=\"" + url + fp + "\">ZZZ</a>"
-            // }
+			links = append(links, fp)
+			// l := Links{
+			// link: "<a href=\"" + url + fp + "\">ZZZ</a>"
+			// }
 		}
 
 	} else {
-		cpath = cpath + fname
 		ext := fname[strings.LastIndex(fname, "."):]
-		// copyfile(fpath, cpath)
 		out := readfile(fpath)
 		ctype := createContentType(ext)
 		w.Header().Set("Content-Disposition", "attachment; filename="+fname)
@@ -70,9 +75,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprintln(w, fpath)
 	// fmt.Fprintln(w, cpath)
 	p := Person{
-		Name: "sekky",
-		From: "埼玉",
-		Links: link,
+		Name:  "sekky",
+		From:  "埼玉",
+		Links: links,
+		Url: url,
 	}
 
 	tmpl := template.Must(template.ParseFiles("./view/index.html"))
@@ -81,9 +87,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
-    // http.HandleFunc("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-    http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources"))))
+	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources"))))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
