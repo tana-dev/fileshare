@@ -15,33 +15,45 @@ import (
 type Person struct {
 	Name string
 	From string
+	Links string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	// コピー先
-	cpath := `/tmp/copy/`
-	// cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
+	// cpath := `/tmp/copy/`
+    url := "http://10.27.145.100:8080/"
+	cpath := `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
+    var link string
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath := strings.TrimRight(r.URL.Path, "/")
+    fpath := `\` + strings.Replace(r.URL.Path, "/", `\`, -1)
+	// fpath = strings.TrimRight(r.URL.Path, "/")
 	// fpath = strings.TrimLeft(fpath, "/")
 	fname := filepath.Base(fpath)
 
 	// ファイル存在チェック
 	finfo, err := os.Stat(fpath)
 	if err != nil {
-		fmt.Fprintf(w, "error")
+		fmt.Fprintf(w, "ファイル、もしくはディレクトが存在しません")
 		return
 	}
 
 	if finfo.IsDir() {
+        // type Links struct {
+        //     Name string
+        //     From string
+        // }
 		// ディレクトリ配下のファイル一覧を取得
-		// fpaths := dirwalk(fpath)
-		dirwalk(fpath)
-		// for _, fp := range fpaths {
-		// 	fmt.Fprintln(w, fp)
-		// }
+		fpaths := dirwalk(fpath)
+		// dirwalk(fpath)
+		for _, fp := range fpaths {
+			// fmt.Fprintln(w, "<a href=\"" + url + fp + "\">" + fp + "</a>" + "<br>")
+			link = link + "<a href=\"" + url + fp + "\">" + fp + "</a>" + "<br>"
+            // l := Links{
+                // link: "<a href=\"" + url + fp + "\">ZZZ</a>"
+            // }
+		}
 
 	} else {
 		cpath = cpath + fname
@@ -60,6 +72,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	p := Person{
 		Name: "sekky",
 		From: "埼玉",
+		Links: link,
 	}
 
 	tmpl := template.Must(template.ParseFiles("./view/index.html"))
@@ -69,7 +82,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
-    http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
+    // http.HandleFunc("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+    http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources"))))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
