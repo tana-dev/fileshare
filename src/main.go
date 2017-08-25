@@ -12,30 +12,24 @@ import (
 	"strings"
 )
 
-
-
-type Person struct {
-	Name  string
-	From  string
-	Links []string
-	Url   string
+type Html struct {
+	Links map[string]string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	var url string
-	var links []string
+	var links map[string]string
 	var fpath string
 	var fname string
 
 	url = "http://10.27.145.100:8080/"
 	// cpath = `/tmp/copy/`
-	// cpath = `\\gndomain\MacShare\企画開発本部\開発部門\個人\tanaka-shu\copy\`
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
 	// fpath = strings.TrimLeft(fpath, "/")
-	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1)
-	fpath = strings.TrimRight(r.URL.Path, "/")
+	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1)
+	fpath = strings.TrimRight(fpath, "/")
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -46,20 +40,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if finfo.IsDir() {
-		// type Links struct {
-		//     Name string
-		//     From string
-		// }
-		// ディレクトリ配下のファイル一覧を取得
 		fpaths := dirwalk(fpath)
-		// dirwalk(fpath)
-        m = make(map[string]st)
+		links = map[string]string{}
 		for _, fp := range fpaths {
-			// fmt.Fprintln(w, "<a href=\"" + url + fp + "\">" + fp + "</a>" + "<br>")
-			links = append(links, fp)
-			// l := Links{
-			// link: "<a href=\"" + url + fp + "\">ZZZ</a>"
-			// }
+			index := strings.Replace(fp, `\`, "/", -1)
+			index = url + strings.Replace(index, "/", "", 2)
+			links[index] = fp
 		}
 
 	} else {
@@ -74,15 +60,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// fmt.Fprintln(w, fpath)
 	// fmt.Fprintln(w, cpath)
-	p := Person{
-		Name:  "sekky",
-		From:  "埼玉",
+	h := Html{
 		Links: links,
-		Url: url,
 	}
 
 	tmpl := template.Must(template.ParseFiles("./view/index.html"))
-	tmpl.Execute(w, p)
+	tmpl.Execute(w, h)
 
 }
 

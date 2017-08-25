@@ -33,21 +33,16 @@
     <div class="jumbotron">
       <div class="container">
         <h2>Downloder</h2>
-        <p>名前:{{$.Name}}</p>
-        <p>出身:{{$.From}}</p>
-{{.Links}}
-        {{range $val := .Links}}
-            {{$val}}
+        {{range $index, $var := .Links}}
+            <a href="{{$index}}">{{$var}}</a></br>
         {{end}}
-{{.Links}}
-            {{$.Url}}
       </div>
     </div>
     <!--　▲ ジャンボトロン　 -->
     <!-- js -->
     <!-- <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- js -->
 </body>
 </html>
