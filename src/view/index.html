@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Downloder</title>
-    <link rel="shortcut icon" href="/resources/c_d.ico" type="image/vnd.microsoft.icon">
+    <link rel="shortcut icon" href="../resources/c_d.ico" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
@@ -27,38 +27,33 @@
             </ul>
         </div>
     </nav>
-    <!-- <div class="jumbotron"> -->
-        <div class="container">
-            <h2>Downloder</h2>
-            <ol class="breadcrumb">
-            {{ $x := 0 }}
-            {{ $length := len .Breadcrumbs }}
-            {{range $index, $var := .Breadcrumbs}}
-	            <li><a href="{{$index}}">{{$var}}</a></li>
+    <div class="container">
+        <h2>Downloder</h2>
+        <ol class="breadcrumb">
+        {{ $x := 0 }}
+        {{ $length := len .Breadcrumbs }}
+        {{range $index, $var := .Breadcrumbs}}
+	        <li><a href="{{$index}}">{{$var}}</a></li>
+        {{end}}
+        </ol>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Last Upadate</th>
+            </tr>
+            {{range $file := .FileinfoList}}
+            <tr>
+                <td>
+                    <a href="{{index $file 0}}">{{index $file 1}}</a></br>
+                </td>
+                <td>
+                    <span>{{index $file 2}}</span>
+                </td>
+            </tr>
             {{end}}
-            </ol>
-            <table class="table table-striped">
-                <tr>
-                    <th>Name</th>
-                    <th>Last Upadate</th>
-                    <th></th>
-                </tr>
-                {{range $file := .FileinfoList}}
-                <tr>
-                    <td>
-                        <a href="{{index $file 0}}">{{index $file 1}}</a></br>
-                    </td>
-                    <td>
-                        <span>{{index $file 2}}</span>
-                    </td>
-                    <td></td>
-                </tr>
-                {{end}}
-            </table>
-        </div>
-    <!-- </div> -->
+        </table>
+    </div>
     <!-- js -->
-    <!-- <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- js -->
