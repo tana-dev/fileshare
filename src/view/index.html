@@ -3,42 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Downloder</title>
-    <link rel="shortcut icon" href="./c_d.ico">
+    <link rel="shortcut icon" href="/resources/c_d.ico" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color: #663399;">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample2">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">
-				<img alt="Brand" src="./c_d.svg" style="height: 20px;">DL
-			</a>
-		</div>
-		<div class="collapse navbar-collapse" id="navbarEexample2">
-			<ul class="nav navbar-nav">
-				<li><a href="#">メニューＡ</a></li>
-				<li><a href="#">メニューＢ</a></li>
-				<li><a href="#">メニューＣ</a></li>
-			</ul>
-		</div>
-	</div>
-</nav>
-    <!--　▼ ジャンボトロン　 -->
-    <div class="jumbotron">
-      <div class="container">
-        <h2>Downloder</h2>
-        {{range $index, $var := .Links}}
-            <a href="{{$index}}">{{$var}}</a></br>
-        {{end}}
-      </div>
-    </div>
-    <!--　▲ ジャンボトロン　 -->
+    <nav class="navbar navbar-inverse bg-primary" style="background-color: #330066;" >
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color: #FF6600;">Downloder</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <!-- <li class="active"><a href="#"><span >Home</span></a></li> -->
+                <!-- <li class="dropdown"> -->
+                <!--     <a class="dropdown&#45;toggle" data&#45;toggle="dropdown" href="#" >Page 1<span class="caret"></span></a> -->
+                <!--     <ul class="dropdown&#45;menu"> -->
+                <!--         <li><a href="#"  >Page 1&#45;1</a></li> -->
+                <!--         <li><a href="#"  >Page 1&#45;2</a></li> -->
+                <!--         <li><a href="#"  >Page 1&#45;3</a></li> -->
+                <!--     </ul> -->
+                <!-- </li> -->
+                <li><a href="#">contents</a></li>
+                <li><a href="#">EDM進行管理</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- <div class="jumbotron"> -->
+        <div class="container">
+            <h2>Downloder</h2>
+            <ol class="breadcrumb">
+            {{ $x := 0 }}
+            {{ $length := len .Breadcrumbs }}
+            {{range $index, $var := .Breadcrumbs}}
+	            <li><a href="{{$index}}">{{$var}}</a></li>
+            {{end}}
+            </ol>
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Last Upadate</th>
+                    <th></th>
+                </tr>
+                {{range $file := .FileinfoList}}
+                <tr>
+                    <td>
+                        <a href="{{index $file 0}}">{{index $file 1}}</a></br>
+                    </td>
+                    <td>
+                        <span>{{index $file 2}}</span>
+                    </td>
+                    <td></td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+    <!-- </div> -->
     <!-- js -->
     <!-- <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

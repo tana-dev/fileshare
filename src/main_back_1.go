@@ -17,10 +17,16 @@ type Html struct {
 	Breadcrumbs  map[string]string
 }
 
+type Fileinfo struct {
+	Name       string
+	Link       string
+	Updatetime string
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 
 	var url string
-	var fileinfoList [][]string
+	var fileinfoList []string
 	var breadcrumbs map[string]string
 	var fpath string
 	var fname string
@@ -60,8 +66,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if fi.IsDir() {
 		fpaths := dirwalk(fpath)
+		// fileinfo = map[string]string{}
+		fileinfo := map[string]string{}
 		for _, fp := range fpaths {
-			var fileinfo []string
 			// index := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
 			// index = url + strings.Replace(index, "/", "", 2) // 2.Windows
 			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
@@ -75,9 +82,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			updatetime_tmp := fi.ModTime()
 			updatetime := updatetime_tmp.Format("2006-01-02 15:04:05")
 
-			fileinfo = append(fileinfo, link)
-			fileinfo = append(fileinfo, name)
-			fileinfo = append(fileinfo, updatetime)
+fileinfo["Name"] = name
+fileinfo["Link"] = link
+fileinfo["Updatetime"] = updatetime
+
+			// f := Fileinfo{
+			// 	Name:       name,
+			// 	Link:       link,
+			// 	// Updatetime: "tanaka",
+			// 	Updatetime: updatetime,
+			// }
+
 			fileinfoList = append(fileinfoList, fileinfo)
 		}
 
@@ -97,15 +112,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		FileinfoList: fileinfoList,
 		Breadcrumbs:  breadcrumbs,
 	}
-
-	// results := []ToDo{ToDo{5323, "foo", "bar"}, ToDo{632, "foo", "bar"}}
-	// funcs := template.FuncMap{"add": add}
-	// temp := template.Must(template.New("index.html").Funcs(funcs).ParseFiles(templateDir + "/index.html"))
-	// temp.Execute(writer, results)
-
-	// funcs := template.FuncMap{"add": add}
-	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
-	// tmpl.Execute(w, h)
 
 	tmpl := template.Must(template.ParseFiles("./view/index.html"))
 	tmpl.Execute(w, h)
@@ -221,8 +227,4 @@ func dirwalk(dir string) []string {
 	}
 
 	return paths
-}
-
-func add(x, y int) int {
-	return x + y
 }
