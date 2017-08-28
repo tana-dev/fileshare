@@ -26,12 +26,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var fname string
 
 	url = "http://10.27.145.100:8080/"
-	url = "http://192.168.33.22:8080/"
+	// url = "http://192.168.33.22:8080/"
 	fpath = r.URL.Path
+	fpath1 := r.URL.Path
+	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, "/")
+	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	fpath = strings.TrimRight(fpath, `\`) // 1.Windows
+	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -42,7 +45,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// breadcrumbs create
-	dirs_list := strings.Split(strings.TrimLeft(fpath, "/"), "/")
+	dirs_list := strings.Split(strings.TrimLeft(fpath1, "/"), "/")
 	breadcrumbs = map[string]string{}
 	var indexs map[int]string
 	indexs = map[int]string{}
@@ -62,9 +65,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fpaths := dirwalk(fpath)
 		for _, fp := range fpaths {
 			var fileinfo []string
-			// index := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
-			// index = url + strings.Replace(index, "/", "", 2) // 2.Windows
-			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
+			link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
+			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
 
 			fi, err := os.Stat(fp)

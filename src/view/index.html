@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Downloder</title>
-    <link rel="shortcut icon" href="../resources/img/favicon_d.gif" type="image/vnd.microsoft.icon">
+    <link rel="shortcut icon" href="/resources/img/favicon_d.gif" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
@@ -22,8 +22,9 @@
                 <!--         <li><a href="#"  >Page 1&#45;3</a></li> -->
                 <!--     </ul> -->
                 <!-- </li> -->
-                <li><a href="#">contents</a></li>
-                <li><a href="#">EDM進行管理</a></li>
+                <li><a href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/">contents</a></li>
+                <li><a href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理">EDM進行管理</a></li>
+                <li><a href="http://10.27.145.100:8080/gndomain/MacShare/企画開発本部/開発部門/個人/tanaka-shu">tanaka-shu</a></li>
             </ul>
         </div>
     </nav>
@@ -44,7 +45,7 @@
             {{range $file := .FileinfoList}}
             <tr>
                 <td>
-                    <a href="{{index $file 0}}">{{index $file 1}}</a></br>
+                    <a calss="text-muted" href="{{index $file 0}}">{{index $file 1}}</a>
                 </td>
                 <td>
                     <span>{{index $file 2}}</span>
