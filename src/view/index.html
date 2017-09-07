@@ -5,6 +5,8 @@
     <title>Downloder</title>
     <link rel="shortcut icon" href="/resources/img/favicon_d.gif" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse bg-primary" style="background-color: #330066;" >
@@ -29,7 +31,8 @@
         </div>
     </nav>
     <div class="container">
-        <h2>Downloder</h2>
+        <!-- <h2>Downloder</h2> -->
+        <form><input type="text" id="search"/></form>
         <ol class="breadcrumb">
         {{ $x := 0 }}
         {{ $length := len .Breadcrumbs }}
@@ -45,7 +48,7 @@
             {{range $file := .FileinfoList}}
             <tr>
                 <td>
-                    <a calss="text-muted" href="{{index $file 0}}">{{index $file 1}}</a>
+                    <a calss="text-muted" href="{{index $file 0}}" style="color:#000000;">{{index $file 1}}</a>
                 </td>
                 <td>
                     <span>{{index $file 2}}</span>
@@ -55,8 +58,41 @@
         </table>
     </div>
     <!-- js -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- jQuery Plugin ::: QuickSearch -->
+    <script src="/resources/js/jquery.quicksearch.js"></script>
+    <script>
+    $(function() {
+
+$('input#search').quicksearch('table tbody tr', {
+	'delay': 100,
+	'selector': 'th',
+	'stripeRows': ['odd', 'even'],
+	'loader': 'span.loading',
+	'noResults': 'tr#noresults',
+	'bind': 'keyup keydown',
+	'onBefore': function () {
+		console.log('on before');
+	},
+	'onAfter': function () {
+		console.log('on after');
+	},
+	'show': function () {
+		$(this).addClass('show');
+	},
+	'hide': function () {
+		$(this).removeClass('show');
+	}
+	'prepareQuery': function (val) {
+		return new RegExp(val, "i");
+	},
+	'testQuery': function (query, txt, _row) {
+		return query.test(txt);
+	}
+});
+
+    });
+    </script>
     <!-- js -->
 </body>
 </html>

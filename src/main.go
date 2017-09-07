@@ -26,15 +26,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var fname string
 
 	url = "http://10.27.145.100:8080/"
-	// url = "http://192.168.33.22:8080/"
+	url = "http://192.168.33.22:8080/"
 	fpath = r.URL.Path
 	fpath1 := r.URL.Path
 	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, `\`) // 1.Windows
-	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
+	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	// fpath = strings.TrimRight(fpath, `\`) // 1.Windows
+	fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -65,9 +65,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fpaths := dirwalk(fpath)
 		for _, fp := range fpaths {
 			var fileinfo []string
-			link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
-			link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
-			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			// link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
+			// link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
+			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
 
 			fi, err := os.Stat(fp)
@@ -100,11 +100,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		FileinfoList: fileinfoList,
 		Breadcrumbs:  breadcrumbs,
 	}
-
-	// results := []ToDo{ToDo{5323, "foo", "bar"}, ToDo{632, "foo", "bar"}}
-	// funcs := template.FuncMap{"add": add}
-	// temp := template.Must(template.New("index.html").Funcs(funcs).ParseFiles(templateDir + "/index.html"))
-	// temp.Execute(writer, results)
 
 	// funcs := template.FuncMap{"add": add}
 	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
@@ -178,7 +173,8 @@ func createContentType(ext string) string {
 	case ".pdf":
 		ctype = "application/pdf" // PDFファイル
 	case ".xlsx":
-		ctype = "application/vnd.ms-excel" // EXCELファイル
+		// ctype = "application/vnd.ms-excel" // EXCELファイル
+		ctype = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" // EXCELファイル
 	case ".ppt":
 		ctype = "application/vnd.ms-powerpoint" // PowerPointファイル
 	case ".docx":
