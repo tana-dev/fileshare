@@ -44,6 +44,7 @@
             <tr>
                 <th>Name</th>
                 <th>Last Upadate</th>
+                <th>Type</th>
             </tr>
             {{range $file := .FileinfoList}}
             <tr>
@@ -52,6 +53,9 @@
                 </td>
                 <td>
                     <span>{{index $file 2}}</span>
+                </td>
+                <td>
+                    <span>{{index $file 3}}</span>
                 </td>
             </tr>
             {{end}}

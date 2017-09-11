@@ -27,6 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	url = "http://10.27.145.100:8080/"
 	url = "http://192.168.33.22:8080/"
+
 	fpath = r.URL.Path
 	fpath1 := r.URL.Path
 	fpath1 = strings.TrimRight(fpath1, "/")
@@ -65,12 +66,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fpaths := dirwalk(fpath)
 		for _, fp := range fpaths {
 			var fileinfo []string
+            var dir string
 			// link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
 			// link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
 			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
+            f, _ := os.Stat(fp)
+            if f.IsDir() {
+                dir = "dir"
+            } else {
+                dir = "notdir"
+            }
 
-			fi, err := os.Stat(fp)
 			if err != nil {
 				fmt.Fprintf(w, "ファイルの読み込みに失敗しました")
 				return
@@ -81,6 +88,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			fileinfo = append(fileinfo, link)
 			fileinfo = append(fileinfo, name)
 			fileinfo = append(fileinfo, updatetime)
+			fileinfo = append(fileinfo, dir)
 			fileinfoList = append(fileinfoList, fileinfo)
 		}
 
@@ -92,6 +100,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", ctype)
 		// w.Header().Set("Content-Length", string(len(out)))
 		w.Write(out)
+        return
 	}
 
 	// fmt.Fprintln(w, fpath)
