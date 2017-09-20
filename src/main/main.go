@@ -33,9 +33,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	// fpath = strings.TrimRight(fpath, `\`) // 1.Windows
-	fpath = strings.TrimRight(fpath, "/") // 2. Linux
+	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	fpath = strings.TrimRight(fpath, `\`) // 1.Windows
+	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -67,9 +67,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		for _, fp := range fpaths {
 			var fileinfo []string
             var dir string
-			// link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
-			// link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
-			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
+			link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
+			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
             f, _ := os.Stat(fp)
             if f.IsDir() {
