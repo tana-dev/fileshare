@@ -43,7 +43,7 @@
             {{range $file := .FileinfoList}}
             <tr>
                 <td>
-                    <a calss="text-muted" href="{{index $file 0}}" style="color:#000000;">{{index $file 1}}</a>
+                    <a calss="text-muted" href="{{index $file 0}}" style="color:#000000;"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{index $file 1}}</a>
                 </td>
                 <td>
                     <span>{{index $file 2}}</span>
