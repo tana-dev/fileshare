@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Downloder</title>
+    <link rel="shortcut icon" href="./resources/img/favicon_d_orange.gif" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="color: #FF6600;">Downloder</a>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/">contents</a></li>
+          <li class="nav-item"><a class="nav-link" href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理">EDM進行管理</a></li>
+          <li class="nav-item"><a class="nav-link" href="http://10.27.145.100:8080/gndomain/MacShare/企画開発本部/開発部門/個人/tanaka-shu">tanaka-shu</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+        <br><br><br>
+        <!-- <form><input type="text" id="search"/></form> -->
+        <ol class="breadcrumb">
+        {{ $x := 0 }}
+        {{ $length := len .Breadcrumbs }}
+        {{range $index, $var := .Breadcrumbs}}
+	        <li class="breadcrumb-item" ><a href="{{$index}}">{{$var}}</a></li>
+        {{end}}
+        </ol>
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Last Upadate</th>
+            </tr>
+            {{range $file := .FileinfoList}}
+            <tr>
+                <td>
+                    <a calss="text-muted" href="{{index $file 0}}" style="color:#000000;"><i class="fa {{index $file 3}}"></i> {{index $file 1}}</a>
+                </td>
+                <td>
+                    <span>{{index $file 2}}</span>
+                </td>
+            </tr>
+            {{end}}
+        </table>
+    </div>
+    <!-- js -->
+
+    <!-- jQuery Plugin ::: QuickSearch -->
+    <script src="/resources/js/jquery.quicksearch.js"></script>
+    <script>
+    $(function() {
+
+$('input#search').quicksearch('table tbody tr', {
+	'delay': 100,
+	'selector': 'th',
+	'stripeRows': ['odd', 'even'],
+	'loader': 'span.loading',
+	'noResults': 'tr#noresults',
+	'bind': 'keyup keydown',
+	'onBefore': function () {
+		console.log('on before');
+	},
+	'onAfter': function () {
+		console.log('on after');
+	},
+	'show': function () {
+		$(this).addClass('show');
+	},
+	'hide': function () {
+		$(this).removeClass('show');
+	}
+	'prepareQuery': function (val) {
+		return new RegExp(val, "i");
+	},
+	'testQuery': function (query, txt, _row) {
+		return query.test(txt);
+	}
+});
+
+    });
+    </script>
+    <!-- js -->
+</body>
+</html>

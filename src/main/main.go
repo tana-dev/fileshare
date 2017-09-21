@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	// "net/url"
 	"html/template"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -33,9 +32,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, `\`) // 1.Windows
-	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
+	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	// fpath = strings.TrimRight(fpath, `\`) // 1.Windows
+	fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -66,23 +65,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fpaths := dirwalk(fpath)
 		for _, fp := range fpaths {
 			var fileinfo []string
-            var dir string
-			link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
-			link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
-			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			var dir string
+			// link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
+			// link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
+			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
-            f, _ := os.Stat(fp)
-            if f.IsDir() {
-                dir = "dir"
-            } else {
-                dir = "notdir"
-            }
+			f, _ := os.Stat(fp)
+			if f.IsDir() {
+				dir = "fa-folder"
+			} else {
+				dir = "fa-file-o"
+			}
 
 			if err != nil {
 				fmt.Fprintf(w, "ファイルの読み込みに失敗しました")
 				return
 			}
-			updatetime_tmp := fi.ModTime()
+			updatetime_tmp := f.ModTime()
 			updatetime := updatetime_tmp.Format("2006-01-02 15:04:05")
 
 			fileinfo = append(fileinfo, link)
@@ -91,6 +90,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			fileinfo = append(fileinfo, dir)
 			fileinfoList = append(fileinfoList, fileinfo)
 		}
+		// sort.Sort(fileinfoList)
 
 	} else {
 		ext := fname[strings.LastIndex(fname, "."):]
@@ -100,11 +100,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", ctype)
 		// w.Header().Set("Content-Length", string(len(out)))
 		w.Write(out)
-        return
+		return
 	}
 
-	// fmt.Fprintln(w, fpath)
-	// fmt.Fprintln(w, cpath)
 	h := Html{
 		FileinfoList: fileinfoList,
 		Breadcrumbs:  breadcrumbs,
@@ -114,7 +112,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
 	// tmpl.Execute(w, h)
 
-	tmpl := template.Must(template.ParseFiles("../view/index.html"))
+    templ_file, err := Asset("../resources/view/index.html")
+    tmpl, _ := template.New("foo").Parse(string(templ_file))
+	// tmpl := template.Must(template.ParseFiles("../view/index.html"))
 	tmpl.Execute(w, h)
 
 }
@@ -134,10 +134,6 @@ func readfile(srcpath string) []byte {
 	defer src.Close()
 
 	contents, _ := ioutil.ReadAll(src)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer contents.Close()
 
 	return contents
 }
@@ -222,10 +218,29 @@ func dirwalk(dir string) []string {
 	}
 
 	var paths []string
+	var dpaths []string
+	var fpaths []string
 	for _, file := range files {
-		if 0 != strings.Index(file.Name(), ".") {
-			paths = append(paths, filepath.Join(dir, file.Name()))
+		if 0 != strings.Index(file.Name(), ".") && 0 != strings.Index(file.Name(), "~$") {
+
+			f := filepath.Join(dir, file.Name())
+
+			// ファイル存在チェック
+			fi, _ := os.Stat(f)
+			if fi.IsDir() {
+				dpaths = append(dpaths, filepath.Join(dir, file.Name()))
+			} else {
+				fpaths = append(fpaths, filepath.Join(dir, file.Name()))
+			}
 		}
+	}
+
+	if nil == dpaths && nil != fpaths {
+		paths = fpaths
+	} else if nil != dpaths && nil == fpaths {
+		paths = dpaths
+	} else {
+		paths = append(dpaths, fpaths...)
 	}
 
 	return paths
