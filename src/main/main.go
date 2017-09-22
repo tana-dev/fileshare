@@ -113,14 +113,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// tmpl.Execute(w, h)
 
     templ_file, err := Asset("../resources/view/index.html")
-    tmpl, _ := template.New("foo").Parse(string(templ_file))
-	// tmpl := template.Must(template.ParseFiles("../view/index.html"))
+    tmpl, _ := template.New("tmpl").Parse(string(templ_file))
 	tmpl.Execute(w, h)
 
 }
 
 func main() {
-	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("../resources/"))))
+	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(assetFS())))
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
@@ -161,6 +160,8 @@ func copyfile(srcpath string, dstpath string) {
 func createContentType(ext string) string {
 
 	var ctype string
+
+// w.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(name)))
 
 	switch ext {
 	case ".txt":

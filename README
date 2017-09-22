@@ -1,3 +1,6 @@
-GOOS=linux GOARCH=amd64 go build main.go
-GOOS=windows GOARCH=amd64 go build main.go
-GOOS=darwin GOARCH=amd64 go build main.go
+# compile
+$ cd ./downloader/src/main
+$ go-bindata-assetfs ../resources/...
+$ GOOS=linux GOARCH=amd64 go build bindata_assetfs.go main.go
+$ GOOS=windows GOARCH=amd64 go build bindata_assetfs.go main.go
+$ GOOS=darwin GOARCH=amd64 go build bindata_assetfs.go main.go
