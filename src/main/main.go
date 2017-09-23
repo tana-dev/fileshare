@@ -14,18 +14,30 @@ import (
 type Html struct {
 	FileinfoList [][]string
 	Breadcrumbs  map[string]string
+	User         string
+	Ip           string
+	Bookmark     map[string]string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
+	var ip string
+	var user string
 	var url string
 	var fileinfoList [][]string
 	var breadcrumbs map[string]string
 	var fpath string
 	var fname string
+	var bookmark map[string]string
 
-	url = "http://10.27.145.100:8080/"
-	url = "http://192.168.33.22:8080/"
+	// 外出ししてもいいかも
+	// ip = "10.27.145.100:8080" // Windows
+	ip = "192.168.33.22:8080" // Linux
+	url = "http://" + ip + "/"
+	user = "tanaka-shu"
+	bookmark = map[string]string{
+		"【contents】": url + "gn-fs11/pad/restaurant/00_share/【contents】/",
+		"EDM進行管理":    url + "gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理/"}
 
 	fpath = r.URL.Path
 	fpath1 := r.URL.Path
@@ -106,14 +118,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	h := Html{
 		FileinfoList: fileinfoList,
 		Breadcrumbs:  breadcrumbs,
+		User:         user,
+		Ip:           ip,
+		Bookmark:     bookmark,
 	}
 
 	// funcs := template.FuncMap{"add": add}
 	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
 	// tmpl.Execute(w, h)
 
-    templ_file, err := Asset("../resources/view/index.html")
-    tmpl, _ := template.New("tmpl").Parse(string(templ_file))
+	templ_file, err := Asset("../resources/view/index.html")
+	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
 	tmpl.Execute(w, h)
 
 }
@@ -161,7 +176,7 @@ func createContentType(ext string) string {
 
 	var ctype string
 
-// w.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(name)))
+	// w.Header().Set("Content-Type", mime.TypeByExtension(filepath.Ext(name)))
 
 	switch ext {
 	case ".txt":

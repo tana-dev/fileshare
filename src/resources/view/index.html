@@ -17,12 +17,13 @@
       <a class="navbar-brand" href="#" style="color: #FF6600;">Downloder</a>
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="http://10.27.145.100:8080/gndomain/MacShare/企画開発本部/開発部門/個人/tanaka-shu">tanaka-shu</a></li>
+          <li class="nav-item"><a class="nav-link" href="http://{{.Ip}}/gndomain/MacShare/企画開発本部/開発部門/個人/{{.User}}">{{.User}}</a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/">【contents】</a>
-              <a class="dropdown-item" href="http://10.27.145.100:8080/gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理">EDM進行管理</a>
+            <a class="nav-link dropdown-toggle" id="bookmark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bookmark</a>
+            <div class="dropdown-menu" aria-labelledby="bookmark">
+            {{range $index, $var := .Bookmark}}
+              <a class="dropdown-item" href="{{$var}}">{{$index}}</a>
+            {{end}}
             </div>
           </li>
         </ul>
@@ -32,8 +33,6 @@
         <br><br><br>
         <!-- <form><input type="text" id="search"/></form> -->
         <ol class="breadcrumb">
-        {{ $x := 0 }}
-        {{ $length := len .Breadcrumbs }}
         {{range $index, $var := .Breadcrumbs}}
 	        <li class="breadcrumb-item" ><a href="{{$index}}">{{$var}}</a></li>
         {{end}}
