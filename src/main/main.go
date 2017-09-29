@@ -32,21 +32,27 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// 外出ししてもいいかも
 	// ip = "10.27.145.100:8080" // Windows
-	ip = "192.168.33.22:8080" // Linux
+	// ip = "10.27.148.99:8080" // kitahara-s
+	ip = "10.27.144.136:8080" // kudo-mayu
+	// ip = "192.168.33.22:8080" // Linux
 	url = "http://" + ip + "/"
-	user = "tanaka-shu"
+	user = "kudo-mayu"
+	// user = "tanaka-shu"
+	// user = "kitarara-s"
 	bookmark = map[string]string{
-		"【contents】": url + "gn-fs11/pad/restaurant/00_share/【contents】/",
-		"EDM進行管理":    url + "gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理/"}
+		"グルメニュース":            url + "gn-fs11/pad/restaurant/00_share/【contents】/グルメニュース/",
+		"EDMマーケティングオートメーション": url + "gn-fs11/pad/restaurant/00_share/【contents】/EDMマーケティングオートメーション/"}
+	// "会員属性案件": url + "gn-fs11/pad/restaurant/00_share/【contents】/会員属性案件/",
+	// "EDM進行管理": url + "gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理/"}
 
 	fpath = r.URL.Path
 	fpath1 := r.URL.Path
 	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	// fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	// fpath = strings.TrimRight(fpath, `\`) // 1.Windows
-	fpath = strings.TrimRight(fpath, "/") // 2. Linux
+	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
+	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -78,9 +84,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		for _, fp := range fpaths {
 			var fileinfo []string
 			var dir string
-			// link := strings.Replace(fp, `\`, "/", -1)       // 2.Windows
-			// link = url + strings.Replace(link, "/", "", 2)  // 2.Windows
-			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			link := strings.Replace(fp, `\`, "/", -1)      // 2.Windows
+			link = url + strings.Replace(link, "/", "", 2) // 2.Windows
+			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
 			if f.IsDir() {
@@ -237,7 +243,7 @@ func dirwalk(dir string) []string {
 	var dpaths []string
 	var fpaths []string
 	for _, file := range files {
-		if 0 != strings.Index(file.Name(), ".") && 0 != strings.Index(file.Name(), "~$") {
+		if 0 != strings.Index(file.Name(), ".") && 0 != strings.Index(file.Name(), "~$") && 0 != strings.Index(file.Name(), "Thumbs.db") {
 
 			f := filepath.Join(dir, file.Name())
 
