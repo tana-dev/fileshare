@@ -106,7 +106,7 @@ func ResourcesCssBootstrapGridCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.css", size: 25510, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.css", size: 25510, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -126,7 +126,7 @@ func ResourcesCssBootstrapGridCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.css.map", size: 31527, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.css.map", size: 31527, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -146,7 +146,7 @@ func ResourcesCssBootstrapGridMinCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.min.css", size: 18528, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.min.css", size: 18528, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -166,7 +166,7 @@ func ResourcesCssBootstrapGridMinCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.min.css.map", size: 12300, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-grid.min.css.map", size: 12300, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -186,7 +186,7 @@ func ResourcesCssBootstrapRebootCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.css", size: 5916, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.css", size: 5916, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -206,7 +206,7 @@ func ResourcesCssBootstrapRebootCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.css.map", size: 9322, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.css.map", size: 9322, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -226,7 +226,7 @@ func ResourcesCssBootstrapRebootMinCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.min.css", size: 4707, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.min.css", size: 4707, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -246,7 +246,7 @@ func ResourcesCssBootstrapRebootMinCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.min.css.map", size: 2668, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap-reboot.min.css.map", size: 2668, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -266,7 +266,7 @@ func ResourcesCssBootstrapCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap.css", size: 191738, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap.css", size: 191738, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -286,7 +286,7 @@ func ResourcesCssBootstrapCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap.css.map", size: 235595, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap.css.map", size: 235595, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -306,7 +306,7 @@ func ResourcesCssBootstrapMinCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap.min.css", size: 150996, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap.min.css", size: 150996, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -326,7 +326,7 @@ func ResourcesCssBootstrapMinCssMap() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/bootstrap.min.css.map", size: 68044, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/bootstrap.min.css.map", size: 68044, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -346,7 +346,7 @@ func ResourcesCssDashboardCss() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/css/dashboard.css", size: 910, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/css/dashboard.css", size: 910, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -366,7 +366,7 @@ func ResourcesImgFavicon_d_greenGif() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/favicon_d_green.gif", size: 4046, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/favicon_d_green.gif", size: 4046, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -386,7 +386,7 @@ func ResourcesImgFavicon_d_orangeGif() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/favicon_d_orange.gif", size: 4478, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/favicon_d_orange.gif", size: 4478, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -406,7 +406,7 @@ func ResourcesImgFavicon_g_blueGif() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/favicon_g_blue.gif", size: 4544, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/favicon_g_blue.gif", size: 4544, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -426,7 +426,7 @@ func ResourcesImgFavicon_g_greenGif() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/favicon_g_green.gif", size: 4276, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/favicon_g_green.gif", size: 4276, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -446,7 +446,7 @@ func ResourcesImgFavicon_g_orangeGif() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/favicon_g_orange.gif", size: 3749, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/favicon_g_orange.gif", size: 3749, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -466,7 +466,7 @@ func ResourcesImgGlyphiconsHalflingsWhitePng() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/glyphicons-halflings-white.png", size: 8777, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/glyphicons-halflings-white.png", size: 8777, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -486,7 +486,7 @@ func ResourcesImgGlyphiconsHalflingsPng() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/img/glyphicons-halflings.png", size: 12799, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/img/glyphicons-halflings.png", size: 12799, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -506,7 +506,7 @@ func ResourcesJsBootstrapJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/js/bootstrap.js", size: 99753, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/js/bootstrap.js", size: 99753, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -526,7 +526,7 @@ func ResourcesJsBootstrapMinJs() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/js/bootstrap.min.js", size: 46653, mode: os.FileMode(420), modTime: time.Unix(1506302834, 0)}
+	info := bindataFileInfo{name: "../resources/js/bootstrap.min.js", size: 46653, mode: os.FileMode(420), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -546,7 +546,7 @@ func ResourcesViewIndexHtml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "../resources/view/index.html", size: 3442, mode: os.FileMode(493), modTime: time.Unix(1506322735, 0)}
+	info := bindataFileInfo{name: "../resources/view/index.html", size: 3442, mode: os.FileMode(493), modTime: time.Unix(1510719319, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

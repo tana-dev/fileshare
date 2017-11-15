@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"../lib"
 )
 
 type Html struct {
@@ -30,20 +31,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var fname string
 	var bookmark map[string]string
 
-	// 外出ししてもいいかも
-	// ip = "10.27.145.100:8080" // Windows
-	// ip = "10.27.148.99:8080" // kitahara-s
-	ip = "10.27.144.136:8080" // kudo-mayu
-	// ip = "192.168.33.22:8080" // Linux
-	url = "http://" + ip + "/"
-	user = "kudo-mayu"
-	// user = "tanaka-shu"
-	// user = "kitarara-s"
-	bookmark = map[string]string{
-		"グルメニュース":            url + "gn-fs11/pad/restaurant/00_share/【contents】/グルメニュース/",
-		"EDMマーケティングオートメーション": url + "gn-fs11/pad/restaurant/00_share/【contents】/EDMマーケティングオートメーション/"}
-	// "会員属性案件": url + "gn-fs11/pad/restaurant/00_share/【contents】/会員属性案件/",
-	// "EDM進行管理": url + "gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理/"}
+	// ユーザー設定情報取得
+	userConfig, err := appconfig.Parse("../config/user.json")
+	if err != nil {
+		fmt.Println("error ")
+	}
+
+	// ユーザー情報セット
+	ip = userConfig.Host + ":"+ userConfig.Port
+	url = userConfig.Protocol + "://"+ ip + "/"
+	user = userConfig.Username
+	for i,v := range userConfig.Bookmarks {
+		bookmark[i] = url + v
+	}
 
 	fpath = r.URL.Path
 	fpath1 := r.URL.Path
