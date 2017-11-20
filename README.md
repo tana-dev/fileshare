@@ -1,5 +1,6 @@
 # view file prepartion compile
 $ cd ./src/main
+
 $ go-bindata-assetfs ../resources/...
 
 # compile cmd
