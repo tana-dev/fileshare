@@ -1,4 +1,4 @@
-## golang setup
+## setup
 ```
 $ export GOPATH=`pwd`
 $ export GOBIN=`pwd`/bin/
