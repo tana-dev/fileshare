@@ -20,12 +20,12 @@ func Parse(filename string) (Config, error) {
 	var c Config
 	jsonString, err := ioutil.ReadFile(filename)
 	if err != nil {
-		fmt.Println("error: ")
+		fmt.Println("error: t")
 		return c, err
 	}
 	err = json.Unmarshal(jsonString, &c)
 	if err != nil {
-		fmt.Println("error: ")
+		fmt.Println("error: t1")
 		return c, err
 	}
 	return c, nil

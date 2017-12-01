@@ -32,7 +32,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var bookmark map[string]string
 
 	// ユーザー設定情報取得
-	userConfig, err := appconfig.Parse("../config/user.json")
+	userConfig, err := appconfig.Parse("./user.json")
 	if err != nil {
 		fmt.Println("error ")
 	}
@@ -41,6 +41,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	ip = userConfig.Host + ":"+ userConfig.Port
 	url = userConfig.Protocol + "://"+ ip + "/"
 	user = userConfig.Username
+	bookmark = map[string]string{}
+
 	for i,v := range userConfig.Bookmarks {
 		bookmark[i] = url + v
 	}
@@ -133,7 +135,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
 	// tmpl.Execute(w, h)
 
-	templ_file, err := Asset("../resources/view/index.html")
+	templ_file, err := Asset("../resources/view/downloader/index.html")
 	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
 	tmpl.Execute(w, h)
 
