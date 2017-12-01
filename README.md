@@ -1,25 +1,32 @@
-# view file prepartion compile
+## setup
+```
+$ export GOPATH=`pwd`
+$ export GOBIN=`pwd`/bin/
+$ export PATH=$PATH:$GOBIN
+```
+
+## view file prepartion compile
 ```
 $ cd ./src/main
 $ go-bindata-assetfs ../resources/...
 ```
 
-# compile cmd
+## compile cmd
 ```
 $ cd ./src/main
 ```
 
-## linux
+* linux
 ```
 $ GOOS=linux GOARCH=amd64 go build -o ../../bin/downloader bindata_assetfs.go main.go
 ```
 
-## windows
+* windows
 ```
 $ GOOS=windows GOARCH=amd64 go build -o ../../bin/downloader.exe bindata_assetfs.go main.go
 ```
 
-## mac
+* mac
 ```
 $ GOOS=darwin GOARCH=amd64 go build -o ../../bin/downloader bindata_assetfs.go main.go
 ```
