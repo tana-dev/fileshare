@@ -1,0 +1,11 @@
+{
+	"username" : "tanashun",
+	"protocol" : "http",
+	"host" : "192.168.33.22",
+	"port" : "8080",
+	"bookmarks": {
+		"EDMマーケティングオートメーション" : "gn-fs11/pad/restaurant/00_share/【contents】/EDMマーケティングオートメーション/",
+		"会員属性案件" : "gn-fs11/pad/restaurant/00_share/【contents】/会員属性案件/",
+		"EDM進行管理" : "gn-fs11/pad/restaurant/00_share/【contents】/EDM進行管理/"
+	}
+}

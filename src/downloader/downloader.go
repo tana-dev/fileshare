@@ -1,4 +1,4 @@
-package main
+package downloader
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ type Html struct {
 	Bookmark     map[string]string
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 
 	var ip string
 	var user string
@@ -32,7 +32,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	var bookmark map[string]string
 
 	// ユーザー設定情報取得
-	userConfig, err := appconfig.Parse("./user.json")
+	userConfig, err := appconfig.Parse("./config/user.json")
 	if err != nil {
 		fmt.Println("error ")
 	}
@@ -52,9 +52,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fpath1 = strings.TrimRight(fpath1, "/")
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
-	// fpath = strings.TrimRight(fpath, "/") // 2. Linux
+	//fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
+	//fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
+	fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -86,9 +86,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		for _, fp := range fpaths {
 			var fileinfo []string
 			var dir string
-			link := strings.Replace(fp, `\`, "/", -1)      // 2.Windows
-			link = url + strings.Replace(link, "/", "", 2) // 2.Windows
-			// link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			//link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
+			//link = url + strings.Replace(link, "/", "", 2) // 1.Windows
+			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
 			if f.IsDir() {
@@ -131,20 +131,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Bookmark:     bookmark,
 	}
 
-	// funcs := template.FuncMap{"add": add}
-	// tmpl := template.Must(template.New("./view/index.html").Funcs(funcs).ParseFiles("./view/index.html"))
-	// tmpl.Execute(w, h)
+//	templ_file, err := Asset("../resources/view/downloader/index.html")
+//	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
+//		templates := template.Must(template.New("").Funcs(funcMap).ParseFiles("templates/base.html", "templates/view.html"))
 
-	templ_file, err := Asset("../resources/view/downloader/index.html")
-	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
+	tmpl, _ := template.ParseFiles("./resources/view/downloader/index.html")
 	tmpl.Execute(w, h)
 
-}
-
-func main() {
-	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(assetFS())))
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
 }
 
 func readfile(srcpath string) []byte {
