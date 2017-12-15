@@ -17,10 +17,11 @@ type Html struct {
 	Breadcrumbs  map[string]string
 	User         string
 	Ip           string
-	Bookmark     map[string]string
+	Download     map[string]string
+	Upload       string
 }
 
-func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	var ip string
 	var user string
@@ -29,7 +30,8 @@ func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 	var breadcrumbs map[string]string
 	var fpath string
 	var fname string
-	var bookmark map[string]string
+	var download map[string]string
+	var upload string
 
 	// ユーザー設定情報取得
 	userConfig, err := appconfig.Parse("./config/user.json")
@@ -39,22 +41,26 @@ func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 
 	// ユーザー情報セット
 	ip = userConfig.Host + ":"+ userConfig.Port
-	url = userConfig.Protocol + "://"+ ip + "/"
+	url = userConfig.Protocol + "://"+ ip
 	user = userConfig.Username
-	bookmark = map[string]string{}
 
-	for i,v := range userConfig.Bookmarks {
-		bookmark[i] = url + v
+	// downloadセット
+	download = map[string]string{}
+	for i,v := range userConfig.Download {
+		download[i] = url + "/downloader" + v
 	}
 
+	// uploadセット
+	upload = url + "/uploader"
+
 	fpath = r.URL.Path
-	fpath1 := r.URL.Path
-	fpath1 = strings.TrimRight(fpath1, "/")
+	fpath = strings.TrimLeft(fpath, "/downloader")
+	fpath = strings.TrimRight(fpath, "/")
+	fpath = "/" + fpath
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
 	//fpath = `\` + strings.Replace(r.URL.Path, "/", `\`, -1) // 1.Windows
 	//fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
-	fpath = strings.TrimRight(fpath, "/") // 2. Linux
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -65,19 +71,19 @@ func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// breadcrumbs create
-	dirs_list := strings.Split(strings.TrimLeft(fpath1, "/"), "/")
+	dirs_list := strings.Split(strings.TrimLeft(fpath, "/"), "/")
 	breadcrumbs = map[string]string{}
 	var indexs map[int]string
 	indexs = map[int]string{}
 	for i := 0; i < len(dirs_list); i++ {
 		for l := 0; l <= i; l++ {
 			if l == 0 {
-				indexs[i] = dirs_list[l] + "/"
+				indexs[i] = "/" + dirs_list[l] + "/"
 			} else {
 				indexs[i] = indexs[i] + dirs_list[l] + "/"
 			}
 		}
-		index := url + indexs[i]
+		index := url + "/downloader" + indexs[i]
 		breadcrumbs[index] = dirs_list[i]
 	}
 
@@ -88,7 +94,7 @@ func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 			var dir string
 			//link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
 			//link = url + strings.Replace(link, "/", "", 2) // 1.Windows
-			link := url + strings.Replace(fp, "/", "", 1) // 2.Linux
+			link := url + "/downloader" + fp // 2.Linux
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
 			if f.IsDir() {
@@ -128,7 +134,8 @@ func DownloaderHandler(w http.ResponseWriter, r *http.Request) {
 		Breadcrumbs:  breadcrumbs,
 		User:         user,
 		Ip:           ip,
-		Bookmark:     bookmark,
+		Download:     download,
+		Upload:         upload,
 	}
 
 //	templ_file, err := Asset("../resources/view/downloader/index.html")

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Downloder</title>
-    <link rel="shortcut icon" href="/resources/img/favicon_d_orange.gif" type="image/vnd.microsoft.icon">
+    <link rel="shortcut icon" href="/resources/img/favicon_m_green.gif" type="image/vnd.microsoft.icon">
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -14,31 +14,24 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#" style="color: #FF6600;">Downloder</a>
+      <a class="navbar-brand" href="#" style="color: #00ff00;">MacShare</a>
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="http://{{.Ip}}/gndomain/MacShare/企画開発本部/開発部門/個人/{{.User}}">{{.User}}</a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="bookmark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bookmark</a>
-            <div class="dropdown-menu" aria-labelledby="bookmark">
-            {{range $index, $var := .Bookmark}}
+            <a class="nav-link dropdown-toggle" id="download" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</a>
+            <div class="dropdown-menu" aria-labelledby="download">
+            {{range $index, $var := .Download}}
               <a class="dropdown-item" href="{{$var}}">{{$index}}</a>
             {{end}}
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="bookmark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tool</a>
-            <div class="dropdown-menu" aria-labelledby="bookmark">
-            {{range $index, $var := .Bookmark}}
-              <a class="dropdown-item" href="{{$var}}">{{$index}}</a>
-            {{end}}
-            </div>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="{{.Upload}}">Upload</a></li>
         </ul>
       </div>
     </nav>
     <div class="container">
         <br><br><br>
+		<h2>Download</h2>
         <!-- <form><input type="text" id="search"/></form> -->
         <ol class="breadcrumb">
         {{range $index, $var := .Breadcrumbs}}
@@ -65,7 +58,7 @@
     <!-- js -->
 
     <!-- jQuery Plugin ::: QuickSearch -->
-    <script src="./resources/js/jquery.quicksearch.js"></script>
+    <script src="/resources/js/jquery.quicksearch.js"></script>
     <script>
     $(function() {
 
