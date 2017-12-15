@@ -14,6 +14,7 @@ type Html struct {
 	Ip           string
 	Download     map[string]string
 	Upload       string
+	Pathchange   string
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -23,6 +24,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var url string
 	var download map[string]string
 	var upload string
+	var pathchange string
 
 	// ユーザー設定情報取得
 	userConfig, err := appconfig.Parse("./config/user.json")
@@ -44,11 +46,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// uploadセット
 	upload = url + "/uploader"
 
+	// pathchangeセット
+	pathchange = url + "/pathchange"
+
 	h := Html{
 		User:         user,
 		Ip:           ip,
 		Download:     download,
 		Upload:       upload,
+		Pathchange:   pathchange,
 	}
 
 //	templ_file, err := Asset("../resources/view/downloader/index.html")
@@ -98,4 +104,3 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/uploader/", http.StatusFound)
 
 }
-

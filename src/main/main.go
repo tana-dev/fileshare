@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"../downloader"
 	"../uploader"
+	"../pathchange"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 	http.HandleFunc("/downloader/", downloader.Handler)
 	http.HandleFunc("/uploader/", uploader.Handler)
 	http.HandleFunc("/uploadersave/", uploader.SaveHandler)
+	http.HandleFunc("/pathchange/", pathchange.Handler)
 
 	http.ListenAndServe(":8080", nil)
 }
-
