@@ -2,9 +2,9 @@ package main
 
 import (
 	"net/http"
-	"../downloader"
-	"../uploader"
-	"../pathchange"
+	"../action/download"
+	"../action/upload"
+	"../action/pathchange"
 )
 
 func main() {
@@ -17,9 +17,9 @@ func main() {
 
 	http.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
 
-	http.HandleFunc("/downloader/", downloader.Handler)
-	http.HandleFunc("/uploader/", uploader.Handler)
-	http.HandleFunc("/uploadersave/", uploader.SaveHandler)
+	http.HandleFunc("/download/", download.Handler)
+	http.HandleFunc("/upload/", upload.Handler)
+	http.HandleFunc("/uploadsave/", upload.SaveHandler)
 	http.HandleFunc("/pathchange/", pathchange.Handler)
 
 	http.ListenAndServe(":8080", nil)
