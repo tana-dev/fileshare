@@ -55,10 +55,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Pathchange:   pathchange,
 	}
 
-//	templ_file, err := Asset("../resources/view/download/index.html")
-//	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
-//		templates := template.Must(template.New("").Funcs(funcMap).ParseFiles("templates/base.html", "templates/view.html"))
-
 	tmpl, _ := template.ParseFiles("./resources/view/pathchange/index.html")
 	tmpl.Execute(w, h)
 

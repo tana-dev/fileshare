@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 	"../../lib"
 )
 
@@ -57,13 +58,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Pathchange:   pathchange,
 	}
 
-//	templ_file, err := Asset("../resources/view/download/index.html")
-//	tmpl, _ := template.New("tmpl").Parse(string(templ_file))
-//		templates := template.Must(template.New("").Funcs(funcMap).ParseFiles("templates/base.html", "templates/view.html"))
-
 	tmpl, _ := template.ParseFiles("./resources/view/upload/index.html")
 	tmpl.Execute(w, h)
-
 }
 
 func SaveHandler(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +70,7 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error ")
 	}
 	upload := userConfig.Upload
+	upload = `\` + strings.Replace(upload, "/", `\`, -1) // 1.Windows
 
     if r.Method != "POST" {
         http.Error(w, "Allowed POST method only", http.StatusMethodNotAllowed)
@@ -93,7 +90,7 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
     }
     defer file.Close()
 
-    f, err := os.Create( upload + "/" + handler.Filename )
+    f, err := os.Create( upload + "\\" + handler.Filename )
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
