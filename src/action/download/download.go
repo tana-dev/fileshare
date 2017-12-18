@@ -99,7 +99,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			var fileinfo []string
 			var dir string
 			link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
-			link = url + "/download" + strings.Replace(link, "/", "", 2) // 1.Windows
+			link = url + "/download/" + strings.Replace(link, "/", "", 2) // 1.Windows
 			//link := url + "/download" + fp // 2.Linux
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
