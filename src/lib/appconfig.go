@@ -12,7 +12,8 @@ type Config struct {
 	Protocol string
 	Host string
 	Port string
-	Bookmarks map[string]string
+	Download map[string]string
+	Upload string
 }
 
 // 設定ファイルを読み込む
