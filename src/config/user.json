@@ -1,13 +1,13 @@
 {
 	"username" : "tanaka",
 	"protocol" : "http",
-	"host" : "10.22.100.100",
+	"host" : "localhost",
 	"port" : "8080",
 	"download": {
-		"tanaka1" : "/tanaka/shunichi/",
-		"tanaka2" : "/tanaka/shunichi/",
-		"tanaka3" : "/tanaka/shunichi/",
-		"tanaka4" : "/tanaka/shunichi/"
+		"Directory1" : "/Users/tanaka-shu",
+		"Directory2" : "/Users/tanaka-shu",
+		"Directory3" : "/Users/tanaka-shu",
+		"Directory4" : "/Users/tanaka-shu"
 	},
-	"upload" : "/tanaka/shunichi/tmp"
+	"upload" : "/Users/tanaka-shu"
 }

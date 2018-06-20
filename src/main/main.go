@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/download/", download.Handler)
 	http.HandleFunc("/upload/", upload.Handler)
 	http.HandleFunc("/uploadsave/", upload.SaveHandler)
+	http.HandleFunc("/uploadfile/", upload.SaveFileHandler)
 	http.HandleFunc("/pathchange/", pathchange.Handler)
 
 	http.ListenAndServe(":8080", nil)

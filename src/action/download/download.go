@@ -13,13 +13,16 @@ import (
 )
 
 type Html struct {
-	FileinfoList [][]string
-	Breadcrumbs  map[string]string
-	User         string
-	Ip           string
-	Download     map[string]string
-	Upload       string
-	Pathchange   string
+	FileinfoList      [][]string
+	Breadcrumbs       map[string]string
+	User              string
+	Ip                string
+	Download          map[string]string
+	Upload            string
+	Pathchange        string
+	MakeDirectory     string
+	FileUpload        string
+	CurrentDirectory  string
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -34,6 +37,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var download map[string]string
 	var upload string
 	var pathchange string
+	var fileUpload string
+	var currentDirectory string
 
 	// ユーザー設定情報取得
 	userConfig, err := appconfig.Parse("./config/user.json")
@@ -41,31 +46,36 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error ")
 	}
 
-	// ユーザー情報セット
+	// set userinfo
 	ip = userConfig.Host + ":"+ userConfig.Port
 	url = userConfig.Protocol + "://"+ ip
 	user = userConfig.Username
 
-	// downloadセット
+	// set download
 	download = map[string]string{}
 	for i,v := range userConfig.Download {
 		download[i] = url + "/download" + v
 	}
 
-	// uploadセット
+	// set upload
 	upload = url + "/upload"
+	fileUpload = url + "/uploadfile/"
 
-	// pathchangeセット
-	pathchange = url + "/pathchange"
+	// set pathchange
+	pathchange = url + "/pathchange/"
 
+	// create fpath
 	fpath = r.URL.Path
 	fpath = strings.TrimLeft(fpath, "/download/")
 	fpath = strings.TrimRight(fpath, "/")
 	fpath = "/" + fpath
 
+	// set current Directory
+	currentDirectory = fpath
+
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath = `\` + strings.Replace(fpath, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
+//	fpath = `\` + strings.Replace(fpath, "/", `\`, -1) // 1.Windows
+//	fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -75,12 +85,24 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// link create for make Directory
+	makeDirecroty := url + "/download" + fpath
+	if r.Method == "POST" {
+		newDirectory := fpath + "/" + r.FormValue("directoryName")
+//	newDirectory = `\` + strings.Replace(newDirectory, "/", `\`, -1) // 1.Windows
+	    if err := os.Mkdir(newDirectory, 0777); err != nil {
+	        fmt.Println(err)
+	    }
+	}
+
 	// breadcrumbs create
-	dirs_list := strings.Split(strings.TrimLeft(fpath, "\\\\"), "\\") // 1.Windows
-//	dirs_list := strings.Split(strings.TrimLeft(fpath, "/"), "/") // 2.Linux
+//	dirs_list := strings.Split(strings.TrimLeft(fpath, "\\\\"), "\\") // 1.Windows
+	dirs_list := strings.Split(strings.TrimLeft(fpath, "/"), "/") // 2.Linux
 	breadcrumbs = map[string]string{}
 	var indexs map[int]string
 	indexs = map[int]string{}
+
+	// create
 	for i := 0; i < len(dirs_list); i++ {
 		for l := 0; l <= i; l++ {
 			if l == 0 {
@@ -95,12 +117,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	if fi.IsDir() {
 		fpaths := dirwalk(fpath)
+
 		for _, fp := range fpaths {
 			var fileinfo []string
 			var dir string
-			link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
-			link = url + "/download/" + strings.Replace(link, "/", "", 2) // 1.Windows
-			//link := url + "/download" + fp // 2.Linux
+//			link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
+//			link = url + "/download/" + strings.Replace(link, "/", "", 2) // 1.Windows
+			link := url + "/download" + fp // 2.Linux
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
 			if f.IsDir() {
@@ -136,18 +159,21 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h := Html{
-		FileinfoList: fileinfoList,
-		Breadcrumbs:  breadcrumbs,
-		User:         user,
-		Ip:           ip,
-		Download:     download,
-		Upload:       upload,
-		Pathchange:   pathchange,
+		FileinfoList:     fileinfoList,
+		Breadcrumbs:      breadcrumbs,
+		User:             user,
+		Ip:               ip,
+		Download:         download,
+		Upload:           upload,
+		Pathchange:       pathchange,
+		MakeDirectory:    makeDirecroty,
+		CurrentDirectory: currentDirectory,
+		FileUpload:       fileUpload,
+
 	}
 
 	tmpl, _ := template.ParseFiles("./resources/view/download/index.html")
 	tmpl.Execute(w, h)
-
 }
 
 func readfile(srcpath string) []byte {
