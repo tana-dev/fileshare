@@ -110,6 +110,7 @@ func SaveFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+
 	// check maxMemory
 	err := r.ParseMultipartForm(32 << 20) // maxMemory
 	if err != nil {
@@ -121,6 +122,7 @@ func SaveFileHandler(w http.ResponseWriter, r *http.Request) {
 	currentDir := r.FormValue("currentDirectory")
 	//currentDir = `\` + strings.Replace(currentDir, "/", `\`, -1)  // 1.Windows
 
+
 	// get file data (from post data)
 	file, handler, err := r.FormFile("uploadFile")
 	if err != nil {
@@ -129,13 +131,25 @@ func SaveFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	//f, err := os.Create( currentDir + "\" + handler.Filename )  // 1.Windows
-	f, err := os.Create(currentDir + "/" + handler.Filename) // 2.Linux
+	// get filename
+	targetFile := currentDir + "/" + handler.Filename
+	//targetFile = `\` + strings.Replace(targetFile, "/", `\`, -1)  // 1.Windows
+
+	// check exited file
+	_, err = os.Stat(targetFile)
+	if err == nil {
+		fmt.Println("同名ファイルが存在してます")
+		http.Redirect(w, r, "/download/"+currentDir, http.StatusFound)
+	}
+
+	// open taget file
+	f, err := os.Create(targetFile)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	defer f.Close()
+
 
 	io.Copy(f, file)
 	http.Redirect(w, r, "/download/"+currentDir, http.StatusFound)
