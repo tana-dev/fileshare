@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	//	"strings"
+	"strings"
 	"../../lib"
 )
 
@@ -70,7 +70,7 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error ")
 	}
 	upload := userConfig.Upload
-	//	upload = `\` + strings.Replace(upload, "/", `\`, -1) // 1.Windows
+	upload = `\` + strings.Replace(upload, "/", `\`, -1) // 1.Windows
 
 	if r.Method != "POST" {
 		http.Error(w, "Allowed POST method only", http.StatusMethodNotAllowed)
@@ -120,7 +120,7 @@ func SaveFileHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get current directory (from post data)
 	currentDir := r.FormValue("currentDirectory")
-	//currentDir = `\` + strings.Replace(currentDir, "/", `\`, -1)  // 1.Windows
+	currentDir = `\` + strings.Replace(currentDir, "/", `\`, -1)  // 1.Windows
 
 
 	// get file data (from post data)
@@ -133,7 +133,7 @@ func SaveFileHandler(w http.ResponseWriter, r *http.Request) {
 
 	// get filename
 	targetFile := currentDir + "/" + handler.Filename
-	//targetFile = `\` + strings.Replace(targetFile, "/", `\`, -1)  // 1.Windows
+	targetFile = strings.Replace(targetFile, "/", `\`, -1)  // 1.Windows
 
 	// check exited file
 	_, err = os.Stat(targetFile)
