@@ -34,30 +34,44 @@
 		<div class="container">
 			<br><br><br>
 			<h1>PathChange</h1>
-			<table border="0">
-				<tr>
-					<td>
-						<div>Mac</div>
-						<textarea rows="10" cols="70" id="macPath" onInput="changePath4mac(this)" placeholder="変換したいMacファイルパスをここに入力してください"></textarea>
-					</td>
-					<td>←→</td>
-					<td>
-						<div>Windows</div>
-						<textarea rows="10" cols="70" id="windowsPath" onInput="changePath4windows(this)" placeholder="変換したいWindowsファイルパスをここに入力してください"></textarea>
-					</td>
-				</tr>
-			</table>
+			<div class="row">
+				<div class="col">
+					<div>Mac</div>
+					<textarea rows="10" cols="70" id="macPath" onInput="changePath4mac(this)" placeholder="変換したいMacファイルパスをここに入力してください"></textarea>
+				</div>
+				<div class="col align-middle center-block" >←→</div>
+				<div class="col">
+					<div>Windows</div>
+					<textarea rows="10" cols="70" id="windowsPath" onInput="changePath4windows(this)" placeholder="変換したいWindowsファイルパスをここに入力してください"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<a id="accessPath" class="btn btn-success pull-left" href="http://10.21.145.100:8080/download/gndomain/MacShare/企画開発本部/開発部門/個人/tanaka-shu/">Access</a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<div id="accessUrl" class="card card-body">http://10.21.145.100:8080/download/gndomain/MacShare/企画開発本部/開発部門/個人/tanaka-shu/</div>
+				</div>
+			</div>
 		</div>
 	</body>
 	<!-- js -->
 	<script>
 	function changePath4mac($this) {
+		var default_v = $this.value;
 		var v = $this.value.replace(/\//g, "\\");
 		$('#windowsPath').val(v);
+		$("#accessPath").attr("href", "http://10.21.145.100:8080/download/" + default_v);
+		document.getElementById("accessUrl").innerHTML = "http://10.21.145.100:8080/download/" + default_v;
 	}
 	function changePath4windows($this) {
 		var v = $this.value.replace(/\\/g,"/");
 		$('#macPath').val(v);
+		$("#accessPath").attr("href", "http://10.21.145.100:8080/download/" + v);
+		document.getElementById("accessUrl").innerHTML = "http://10.21.145.100:8080/download/" + default_v;
 	}
 	</script>
 	<!-- js -->
