@@ -4,10 +4,11 @@
 	"host" : "localhost",
 	"port" : "8080",
 	"download": {
-		"Directory1" : "/Users/tanaka-shu",
-		"Directory2" : "/Users/tanaka-shu",
-		"Directory3" : "/Users/tanaka-shu",
-		"Directory4" : "/Users/tanaka-shu"
+		"Directory1" : "/Users/tanashun",
+		"Directory2" : "/Users/tanashun",
+		"Directory3" : "/Users/tanashun",
+		"Directory4" : "/Users/tanashun"
 	},
-	"upload" : "/Users/tanaka-shu"
+	"upload" : "/Users/tanashun",
+	"pathchange" : "/Users/tanashun"
 }

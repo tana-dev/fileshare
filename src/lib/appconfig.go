@@ -14,6 +14,7 @@ type Config struct {
 	Port string
 	Download map[string]string
 	Upload string
+	Pathchange string
 }
 
 // 設定ファイルを読み込む

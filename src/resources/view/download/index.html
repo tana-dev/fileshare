@@ -21,14 +21,13 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" id="download" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download</a>
+						<a class="nav-link dropdown-toggle" id="download" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bookmark</a>
 						<div class="dropdown-menu" aria-labelledby="download">
 						{{range $index, $var := .Download}}
 							<a class="dropdown-item" href="{{$var}}">{{$index}}</a>
 						{{end}}
 						</div>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="{{.Upload}}">Upload</a></li>
 					<li class="nav-item"><a class="nav-link" href="{{.Pathchange}}">PathChange</a></li>
 				</ul>
 			</div>
@@ -38,11 +37,11 @@
 			<h1>Download</h1>
 			<!-- Make Directory -->
 			<table class="table">
-				<div class="btn-group pull-right">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#fileUpload">Upload</button>
-				</div>
-				<div class="btn-group pull-right">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#makeDirectory">+ Directory</button>
+				<div class="btn-toolbar pull-right">
+					<div class="btn-group">
+						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#fileUpload">Upload</button>
+						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#makeDirectory">+ Directory</button>
+					</div>
 				</div>
 			</table>
 			<div class="modal fade" id="fileUpload" tabindex="-1" role="dialog" aria-labelledby="fileUploadLabel">
