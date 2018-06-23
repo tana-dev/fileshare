@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"runtime"
 	"../../lib"
 )
 
@@ -74,8 +75,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	currentDirectory = fpath
 
 	// pathを取るにはr.URL.Pathで受け取文末のスラッシュを削除
-	fpath = `\` + strings.Replace(fpath, "/", `\`, -1) // 1.Windows
-	fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
+	if runtime.GOOS == "windows" {
+		fpath = `\` + strings.Replace(fpath, "/", `\`, -1) // 1.Windows
+		fpath = strings.TrimRight(fpath, `\`)                   // 1.Windows
+	}
 	fname = filepath.Base(fpath)
 
 	// ファイル存在チェック
@@ -89,7 +92,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	makeDirecroty := url + "/download" + currentDirectory + "/"
 	if r.Method == "POST" {
 		newDirectory := fpath + "/" + r.FormValue("directoryName")
-		newDirectory = strings.Replace(newDirectory, "/", `\`, -1) // 1.Windows
+		if runtime.GOOS == "windows" {
+			newDirectory = strings.Replace(newDirectory, "/", `\`, -1) // 1.Windows
+		}
 		fmt.Println(newDirectory)
 		if err := os.Mkdir(newDirectory, 0777); err != nil {
 			fmt.Println(err)
@@ -97,8 +102,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// breadcrumbs create
-	dirs_list := strings.Split(strings.TrimLeft(fpath, "\\\\"), "\\") // 1.Windows
-//	dirs_list := strings.Split(strings.TrimLeft(fpath, "/"), "/") // 2.Linux
+	var dirs_list []string
+	if runtime.GOOS == "windows" {
+		dirs_list = strings.Split(strings.TrimLeft(fpath, "\\\\"), "\\") // 1.Windows
+	} else {
+		dirs_list = strings.Split(strings.TrimLeft(fpath, "/"), "/") // 2.Linux
+	}
 	breadcrumbs = map[string]string{}
 	var indexs map[int]string
 	indexs = map[int]string{}
@@ -122,9 +131,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		for _, fp := range fpaths {
 			var fileinfo []string
 			var dir string
-			link := strings.Replace(fp, `\`, "/", -1)      // 1.Windows
-			link = url + "/download/" + strings.Replace(link, "/", "", 2) // 1.Windows
-//			link := url + "/download" + fp // 2.Linux
+			var link string
+			if runtime.GOOS == "windows" {
+				link = strings.Replace(fp, `\`, "/", -1)      // 1.Windows
+				link = url + "/download/" + strings.Replace(link, "/", "", 2) // 1.Windows
+			} else {
+				link = url + "/download" + fp // 2.Linux
+			}
 			name := filepath.Base(fp)
 			f, _ := os.Stat(fp)
 			if f.IsDir() {

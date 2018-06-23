@@ -1,12 +1,15 @@
 # set
 OS=${1}
 
-# resource file copy
-cp -R ../src/resources ../bin/macshare/
-cp ../src/config/user.json ../bin/macshare/config/
+# make directory
+mkdir -p ../bin/macshare/config/
 
 # remove binary file
 rm ../bin/macshare/macshare*
+
+# resource file copy
+cp -R ../src/resources ../bin/macshare/
+cp ../src/config/user.json ../bin/macshare/config/
 
 # compile
 cd ../src/main/

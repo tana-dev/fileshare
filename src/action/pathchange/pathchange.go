@@ -8,11 +8,13 @@ import (
 )
 
 type Html struct {
-	User         string
-	Ip           string
-	Download     map[string]string
-	Upload       string
-	Pathchange   string
+	User           string
+	Ip             string
+	Download       map[string]string
+	DownloadBase   string
+	Upload         string
+	Pathchange     string
+	PathchangeLink string
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -21,18 +23,20 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var user string
 	var url string
 	var download map[string]string
+	var downloadBase string
 	var upload string
 	var pathchange string
+	var pathchangeLink string
 
-	// ユーザー設定情報取得
+	// get user info
 	userConfig, err := appconfig.Parse("./config/user.json")
 	if err != nil {
 		fmt.Println("error ")
 	}
 
-	// ユーザー情報セット
-	ip = userConfig.Host + ":"+ userConfig.Port
-	url = userConfig.Protocol + "://"+ ip
+	// set static info
+	ip = userConfig.Host + ":" + userConfig.Port
+	url = userConfig.Protocol + "://" + ip
 	user = userConfig.Username
 
 	// downloadセット
@@ -40,19 +44,23 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	for i,v := range userConfig.Download {
 		download[i] = url + "/download" + v
 	}
+	downloadBase = url + "/download"
 
 	// uploadセット
 	upload = url + "/upload"
 
 	// pathchangeセット
 	pathchange = url + "/pathchange"
+	pathchangeLink = url + "/download" + userConfig.Pathchange
 
 	h := Html{
-		User:         user,
-		Ip:           ip,
-		Download:     download,
-		Upload:       upload,
-		Pathchange:   pathchange,
+		User:           user,
+		Ip:             ip,
+		Download:       download,
+		DownloadBase:   downloadBase,
+		Upload:         upload,
+		Pathchange:     pathchange,
+		PathchangeLink: pathchangeLink,
 	}
 
 	tmpl, _ := template.ParseFiles("./resources/view/pathchange/index.html")
