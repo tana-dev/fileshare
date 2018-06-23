@@ -19,7 +19,6 @@ type Html struct {
 	User              string
 	Ip                string
 	Download          map[string]string
-	Upload            string
 	Pathchange        string
 	MakeDirectory     string
 	FileUpload        string
@@ -36,7 +35,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var fpath string
 	var fname string
 	var download map[string]string
-	var upload string
 	var pathchange string
 	var fileUpload string
 	var currentDirectory string
@@ -59,7 +57,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set upload
-	upload = url + "/upload"
 	fileUpload = url + "/uploadfile/"
 
 	// set pathchange
@@ -178,7 +175,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		User:             user,
 		Ip:               ip,
 		Download:         download,
-		Upload:           upload,
 		Pathchange:       pathchange,
 		MakeDirectory:    makeDirecroty,
 		CurrentDirectory: currentDirectory,

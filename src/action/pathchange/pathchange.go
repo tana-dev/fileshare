@@ -12,7 +12,6 @@ type Html struct {
 	Ip             string
 	Download       map[string]string
 	DownloadBase   string
-	Upload         string
 	Pathchange     string
 	PathchangeLink string
 }
@@ -24,7 +23,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var url string
 	var download map[string]string
 	var downloadBase string
-	var upload string
 	var pathchange string
 	var pathchangeLink string
 
@@ -46,9 +44,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 	downloadBase = url + "/download"
 
-	// uploadセット
-	upload = url + "/upload"
-
 	// pathchangeセット
 	pathchange = url + "/pathchange"
 	pathchangeLink = url + "/download" + userConfig.Pathchange
@@ -58,7 +53,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Ip:             ip,
 		Download:       download,
 		DownloadBase:   downloadBase,
-		Upload:         upload,
 		Pathchange:     pathchange,
 		PathchangeLink: pathchangeLink,
 	}
