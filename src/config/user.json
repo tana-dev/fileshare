@@ -2,12 +2,12 @@
 	"username" : "tanaka",
 	"protocol" : "http",
 	"host" : "localhost",
-	"port" : "8880",
+	"port" : "8080",
 	"download": {
 		"appuser" : "/home/appuser",
 		"root" : "/root",
 		"tmp" : "/tmp"
 	},
-	"upload" : "/home/appuser",
+    "upload" : "/Users/tanashun",
 	"pathchange" : "/home/appuser"
 }
