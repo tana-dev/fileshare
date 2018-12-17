@@ -43,6 +43,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	userConfig, err := appconfig.Parse("./config/user.json")
 	if err != nil {
 		fmt.Println("error ")
+		fmt.Println(err)
 	}
 
 	// set userinfo

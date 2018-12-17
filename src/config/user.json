@@ -4,11 +4,10 @@
 	"host" : "localhost",
 	"port" : "8080",
 	"download": {
-		"Directory1" : "/Users/tanashun",
-		"Directory2" : "/Users/tanashun",
-		"Directory3" : "/Users/tanashun",
-		"Directory4" : "/Users/tanashun"
+		"appuser" : "/home/appuser",
+		"root" : "/root",
+		"tmp" : "/tmp"
 	},
-	"upload" : "/Users/tanashun",
-	"pathchange" : "/Users/tanashun"
+    "upload" : "/Users/tanashun",
+	"pathchange" : "/home/appuser"
 }
