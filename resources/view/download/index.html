@@ -35,10 +35,11 @@
 		<div class="container">
 			<br><br><br>
 			<h1>Download</h1>
-			<!-- Make Directory -->
+			<!-- Upload -->
 			<table class="table">
 				<div class="btn-toolbar pull-right">
 					<div class="btn-group">
+						<button type="button" class="btn btn-outline-success" data-toggle="modal" id="linkCopy">LinkCopy</button>
 						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#fileUpload">Upload</button>
 						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#makeDirectory">+ Directory</button>
 					</div>
@@ -69,6 +70,8 @@
 					</div>
 				</div>
 			</div>
+			<!-- Upload -->
+			<!-- Make Directory -->
 			<div class="modal fade" id="makeDirectory" tabindex="-1" role="dialog" aria-labelledby="makeDirectoryLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -117,4 +120,19 @@
 			</table>
 		</div>
 	</body>
+	<!-- js -->
+	<script>
+	$('#linkCopy').click(function() {
+		var url = decodeURI(location.href);
+		var copyFrom = document.createElement("textarea");
+		copyFrom.textContent = url;
+		var bodyElm = document.getElementsByTagName("body")[0];
+		bodyElm.appendChild(copyFrom);
+		copyFrom.select();
+		document.execCommand('copy');
+		bodyElm.removeChild(copyFrom);
+		alert('クリップボードにURLコピーしました。');
+	})
+	</script>
+	<!-- js -->
 </html>

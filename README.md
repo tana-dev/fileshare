@@ -1,12 +1,15 @@
-## setup
+## compile
+### linux
 ```
-$ export GOPATH=`pwd`
-$ export GOBIN=`pwd`/bin/
-$ export PATH=$PATH:$GOBIN
+$ GOOS=linux GOARCH=amd64 go build -o fileshare.exe main.go
 ```
 
-## compile
+### windows
 ```
-$ cd ./build/
-$ ./build.sh windows
+$ GOOS=windows GOARCH=amd64 go build -o fileshare.exe main.go
+```
+
+### mac
+```
+$ GOOS=darwin GOARCH=amd64 go build -o fileshare main.go
 ```
