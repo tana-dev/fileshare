@@ -16,52 +16,48 @@ import (
 type Html struct {
 	FileinfoList      [][]string
 	Breadcrumbs       map[string]string
-	User              string
-	Ip                string
 	Download          map[string]string
 	Pathchange        string
 	MakeDirectory     string
-	FileUpload        string
+	UploadFile        string
 	CurrentDirectory  string
 }
 
+var (
+	url string
+	fileinfoList [][]string
+	breadcrumbs map[string]string
+	fpath string
+	fname string
+	download map[string]string
+	pathchange string
+	uploadfile string
+	currentDirectory string
+)
+
 func Handler(w http.ResponseWriter, r *http.Request) {
 
-	var ip string
-	var user string
-	var url string
-	var fileinfoList [][]string
-	var breadcrumbs map[string]string
-	var fpath string
-	var fname string
-	var download map[string]string
-	var pathchange string
-	var fileUpload string
-	var currentDirectory string
 
-	// ユーザー設定情報取得
+	// get config
 	userConfig, err := appconfig.Parse("./config/user.json")
 	if err != nil {
 		fmt.Println("error ")
-		fmt.Println(err)
 	}
 
-	// set userinfo
-	ip = userConfig.Host + ":"+ userConfig.Port
-	url = userConfig.Protocol + "://"+ ip
-	user = userConfig.Username
+	// build base url
+	url = userConfig.Protocol + "://"+ userConfig.Host + ":"+ userConfig.Port
 
-	// set download
+	// build download
 	download = map[string]string{}
 	for i,v := range userConfig.Download {
 		download[i] = url + "/download" + v
 	}
 
 	// set upload
-	fileUpload = url + "/uploadfile/"
+	uploadfile = url + "/uploadfile"
 
 	// set pathchange
-	pathchange = url + "/pathchange/"
+	pathchange = url + "/pathchange"
 
 	// create fpath
 	fpath = r.URL.Path
@@ -173,14 +169,11 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	h := Html{
 		FileinfoList:     fileinfoList,
 		Breadcrumbs:      breadcrumbs,
-		User:             user,
-		Ip:               ip,
 		Download:         download,
 		Pathchange:       pathchange,
 		MakeDirectory:    makeDirecroty,
 		CurrentDirectory: currentDirectory,
-		FileUpload:       fileUpload,
-
+		UploadFile:       uploadfile,
 	}
 
 	tmpl, _ := template.ParseFiles("./resources/view/download/index.html")

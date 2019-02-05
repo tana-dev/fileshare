@@ -40,21 +40,21 @@
 				<div class="btn-toolbar pull-right">
 					<div class="btn-group">
 						<button type="button" class="btn btn-outline-success" data-toggle="modal" id="linkCopy">LinkCopy</button>
-						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#fileUpload">Upload</button>
+						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#uploadFile">Upload</button>
 						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#makeDirectory">+ Directory</button>
 					</div>
 				</div>
 			</table>
-			<div class="modal fade" id="fileUpload" tabindex="-1" role="dialog" aria-labelledby="fileUploadLabel">
+			<div class="modal fade" id="uploadFile" tabindex="-1" role="dialog" aria-labelledby="uploadFileLabel">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="fileUploadModalLabel">Do you want uploading new File?</h5>
+							<h5 class="modal-title" id="uploadFileModalLabel">Do you want uploading new File?</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form method="post" action="{{.FileUpload}}" enctype="multipart/form-data">
+						<form method="post" action="{{.UploadFile}}" enctype="multipart/form-data">
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="directoryName">Fiel Upload : </label>

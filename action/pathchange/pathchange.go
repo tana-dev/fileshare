@@ -8,8 +8,6 @@ import (
 )
 
 type Html struct {
-	User           string
-	Ip             string
 	Download       map[string]string
 	DownloadBase   string
 	Pathchange     string
@@ -18,8 +16,6 @@ type Html struct {
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 
-	var ip string
-	var user string
 	var url string
 	var download map[string]string
 	var downloadBase string
@@ -33,9 +29,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set static info
-	ip = userConfig.Host + ":" + userConfig.Port
-	url = userConfig.Protocol + "://" + ip
-	user = userConfig.Username
+	url = userConfig.Protocol + "://" + userConfig.Host + ":" + userConfig.Port
 
 	// downloadセット
 	download = map[string]string{}
@@ -49,8 +43,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	pathchangeLink = url + "/download" + userConfig.Pathchange
 
 	h := Html{
-		User:           user,
-		Ip:             ip,
 		Download:       download,
 		DownloadBase:   downloadBase,
 		Pathchange:     pathchange,
@@ -59,5 +51,4 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl, _ := template.ParseFiles("./resources/view/pathchange/index.html")
 	tmpl.Execute(w, h)
-
 }
